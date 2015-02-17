@@ -1,0 +1,10 @@
+Package: cpc
+Type: Package
+Title: Common principal component (CPC) analysis and applications
+Version: 0.1-5
+Date: 2015-02-17
+Author: Theo Pepler
+Maintainer: Theo Pepler <tpepler@sun.ac.za>
+Description: More about what it does (maybe more than one line)
+License: GPL-2
+Depends: gtools
