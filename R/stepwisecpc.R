@@ -1,64 +1,59 @@
-stepwisecpc<-function(covmats, nvec) {
+stepwisecpc <- function(covmats, nvec) {
   
   # Stepwise CPC as described in the paper by N. Trendafilov (2010)
   
-  # covmats: array containing the covariance matrices for the groups, created with a command such as
-  # covmats<-array(NA,dim=c(p,p,k)), where p refers to the number of rows/columns of each covariance 
-  # matrix, and k is the number of groups (or covariance matrices)
-  # nvec: vector containing the sample sizes of the k groups
-  
-  p<-dim(covmats)[1]
-  k<-length(nvec)
-  ntot<-sum(nvec)
+  p <- dim(covmats)[1]
+  k <- length(nvec)
+  ntot <- sum(nvec)
   
   # Calculate pooled covariance matrix
   
-  Spooled<-matrix(0, nrow=p, ncol=p)
+  Spooled <- matrix(0, nrow = p, ncol = p)
   for (j in 1:k){
-    Spooled<-Spooled+(nvec[j]-1)*covmats[, , j]
+    Spooled <- Spooled + (nvec[j] - 1)*covmats[, , j]
   }
-  Spooled<-Spooled/(ntot-k)
+  Spooled <- Spooled / (ntot - k)
   
   # Initial values for stepwise CPC algorithm
   
-  Qmat<-matrix(0, nrow=p, ncol=p)
-  Qtilde<-eigen(Spooled, symmetric=TRUE)$vectors
-  pimat<-diag(p)
-  muvec<-rep(0, k)
-  elmax<-10	# maximum number of iterations
+  Qmat <- matrix(0, nrow = p, ncol = p)
+  Qtilde <- eigen(Spooled, symmetric = TRUE)$vectors
+  pimat <- diag(p)
+  muvec <- rep(0, k)
+  elmax <- 10	# maximum number of iterations
   
   # Calculate stepwise CPCs
   
   for (j in 1:p) {
-    xvec<-as.vector(Qtilde[, j])
-    xvec<-pimat%*%xvec
+    xvec <- as.vector(Qtilde[, j])
+    xvec <- pimat%*%xvec
     
     for (i in 1:k) {
-      muvec[i]<-t(xvec)%*%covmats[, , i]%*%xvec
+      muvec[i] <- t(xvec)%*%covmats[, , i]%*%xvec
     }
     
     for (el in 1:elmax) {
-      Smat<-matrix(0, nrow=p, ncol=p)
+      Smat <- matrix(0, nrow = p, ncol = p)
       for (i in 1:k) {
-        Smat<-Smat + (nvec[i]-1)*covmats[, , i]/muvec[i]
+        Smat <- Smat + (nvec[i] - 1)*covmats[, , i] / muvec[i]
       }
-      yvec<-pimat%*%Smat%*%xvec
-      xvec<-yvec/as.numeric(sqrt(t(yvec)%*%yvec))
+      yvec <- pimat%*%Smat%*%xvec
+      xvec <- yvec / as.numeric(sqrt(t(yvec)%*%yvec))
       for (i in 1:k) {
-        muvec[i]<-t(xvec)%*%covmats[, , i]%*%xvec
+        muvec[i] <- t(xvec)%*%covmats[, , i]%*%xvec
       }
     }
     
-    Qmat[, j]<-xvec
-    pimat<-pimat - xvec%*%t(xvec)
+    Qmat[, j] <- xvec
+    pimat <- pimat - xvec%*%t(xvec)
     
   }
   
-  eigenvals<-matrix(0, p, k)
+  eigenvals <- matrix(0, p, k)
   for (i in 1:k) {
-    eigenvals[, i]<-t((diag(t(Qmat)%*%covmats[, , i]%*%Qmat)))
+    eigenvals[, i] <- t((diag(t(Qmat)%*%covmats[, , i]%*%Qmat)))
   }
   
-  results<-list(B=Qmat, eigenvals=eigenvals)
+  results <- list(B = Qmat, eigenvals = eigenvals)
   return(results)
 }

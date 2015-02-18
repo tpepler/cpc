@@ -14,14 +14,8 @@ stepwisecpc(covmats, nvec)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{covmats}{
-%%     ~~Describe \code{covmats} here~~
-array containing the covariance matrices for the groups, created with a command such as covmats<-array(NA,dim=c(p,p,k)), where p refers to the number of rows/columns of each covariance matrix, and k is the number of groups (or covariance matrices)
-}
-  \item{nvec}{
-%%     ~~Describe \code{nvec} here~~
-vector containing the sample sizes of the k groups
-}
+  \item{covmats }{Array containing the covariance matrices for the groups, created with a command such as covmats <- array(NA, dim = c(p, p, k)), where p refers to the number of rows/columns of each covariance matrix, and k is the number of groups (or covariance matrices).}
+  \item{nvec }{Vector containing the sample sizes of the k groups.}
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
@@ -33,11 +27,12 @@ vector containing the sample sizes of the k groups
 %%  \item{comp2 }{Description of 'comp2'}
 %% ...
 Returns a list with the values:
-\item{B}{orthogonal matrix containing the estimated common eigenvectors in the columns}
-\item{eigenvals}{matrix of which the columns contain the estimated eigenvalues of the k covariance matrices under the CPC model}
+\item{B }{Orthogonal matrix containing the estimated common eigenvectors in the columns.}
+\item{eigenvals }{Matrix of which the columns contain the estimated eigenvalues of the k covariance matrices under the CPC model.}
 }
 \references{
 %% ~put references to the literature/web site here ~
+Trendafilov, N. T. (2010). Stepwise estimation of common principal components. Computational Statistics and Data Analysis, 54(12): 3446-3457.
 }
 \author{
 Sarel Steel, Theo Pepler
@@ -50,56 +45,22 @@ Sarel Steel, Theo Pepler
 
 \seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{FG}}
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+# Estimate the modal matrix for the versicolor and virginica groups
+# under the common eigenvector assumption.
 
-## The function is currently defined as
-function (covmats, nvec) 
-{
-    p <- dim(covmats)[1]
-    k <- length(nvec)
-    ntot <- sum(nvec)
-    Spooled <- matrix(0, nrow = p, ncol = p)
-    for (j in 1:k) {
-        Spooled <- Spooled + (nvec[j] - 1) * S[, , j]
-    }
-    Spooled <- Spooled/(ntot - k)
-    Qmat <- matrix(0, nrow = p, ncol = p)
-    Qtilde <- eigen(Spooled, symmetric = TRUE)$vectors
-    pimat <- diag(p)
-    muvec <- rep(0, k)
-    elmax <- 10
-    for (j in 1:p) {
-        xvec <- as.vector(Qtilde[, j])
-        xvec <- pimat \%*\% xvec
-        for (i in 1:k) {
-            muvec[i] <- t(xvec) \%*\% covmats[, , i] \%*\% xvec
-        }
-        for (el in 1:elmax) {
-            Smat <- matrix(0, nrow = p, ncol = p)
-            for (i in 1:k) {
-                Smat <- Smat + (nvec[i] - 1) * covmats[, , i]/muvec[i]
-            }
-            yvec <- pimat \%*\% Smat \%*\% xvec
-            xvec <- yvec/as.numeric(sqrt(t(yvec) \%*\% yvec))
-            for (i in 1:k) {
-                muvec[i] <- t(xvec) \%*\% covmats[, , i] \%*\% xvec
-            }
-        }
-        Qmat[, j] <- xvec
-        pimat <- pimat - xvec \%*\% t(xvec)
-    }
-    eigenvals <- matrix(0, p, k)
-    for (i in 1:k) {
-        eigenvals[, i] <- t((diag(t(Qmat) \%*\% covmats[, , i] \%*\% 
-            Qmat)))
-    }
-    results <- list(B = Qmat, eigenvals = eigenvals)
-    return(results)
-  }
+data(iris)
+versicolor <- iris[51:100, 1:4]
+virginica <- iris[101:150, 1:4]
+
+# Create array containing the covariance matrices
+S <- array(NA, dim = c(4, 4, 2))
+S[, , 1] <- cov(versicolor)
+S[, , 2] <- cov(virginica)
+
+stepwisecpc(covmats = S, nvec = c(nrow(versicolor), nrow(virginica)))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
