@@ -30,9 +30,11 @@ Implementation of the G algorithm as internal function of the FG algorithm.
 }
 \references{
 %% ~put references to the literature/web site here ~
+Pepler, P.T. (2014). The identification and application of common principal components. PhD dissertation in the Department of Statistics and Actuarial Science, Stellenbosch University.
 }
 \author{
 %%  ~~who you are~~
+Danie Uys, Theo Pepler
 }
 \note{
 %%  ~~further notes~~
@@ -42,36 +44,9 @@ Implementation of the G algorithm as internal function of the FG algorithm.
 
 \seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{eigvec}}, \code{\link{FG}}
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
-
-## The function is currently defined as
-function (T.mat, nvec) 
-{
-    k <- dim(T.mat)[3]
-    Q <- matrix(rep(200, 4), nrow = 2, ncol = 2)
-    Q.nuut <- diag(2)
-    delta <- matrix(NA, nrow = k, ncol = 2)
-    while (abs(Q[2, 1] - Q.nuut[2, 1]) > 1e-07) {
-        Q <- Q.nuut
-        for (i in 1:k) {
-            for (j in 1:2) {
-                delta[i, j] <- t(Q[, j]) \%*\% T.mat[, , i] \%*\% 
-                  Q[, j]
-            }
-        }
-        U <- matrix(rep(0, 4), nrow = 2, ncol = 2)
-        for (i in 1:k) {
-            U <- U + nvec[i] * ((delta[i, 1] - delta[i, 2])/(delta[i, 
-                1] * delta[i, 2])) * T.mat[, , i]
-        }
-        Q.nuut <- eigvec(U)
-    }
-    return(Q.nuut)
-  }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

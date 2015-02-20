@@ -43,6 +43,7 @@ Danie Uys, Theo Pepler
 
 \seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{G.algorithm}}, \code{\link{FG}}
 }
 \examples{
 }
