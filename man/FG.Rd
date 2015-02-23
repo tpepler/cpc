@@ -11,14 +11,8 @@ FG(covmats, nvec)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{covmats}{
-%%     ~~Describe \code{covmats} here~~
-array of covariance matrices to be simultaneously diagonalized, created by a command such as covmats<-array(NA,dim=c(p,p,k))
-}
-  \item{nvec}{
-%%     ~~Describe \code{nvec} here~~
-vector of sample sizes for the covariance matrices in covmats
-}
+  \item{covmats }{Array of covariance matrices to be simultaneously diagonalized, created by a command such as \code{covmats <- array(NA, dim = c(p, p, k))}.}
+  \item{nvec }{Vector of sample sizes for the covariance matrices in \code{covmats}.}
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
@@ -31,11 +25,12 @@ A modal matrix (B) is calculated for the covariance matrices under the assumptio
 %%  \item{comp2 }{Description of 'comp2'}
 %% ...
 Returns a list with the values:
-\item{B}{orthogonal matrix containing the estimated common eigenvectors in the columns}
-\item{diagvals}{matrix of which the columns contain the estimated eigenvalues of the k covariance matrices under the CPC model}
+\item{B }{Orthogonal matrix containing the estimated common eigenvectors in the columns.}
+\item{diagvals }{Matrix of which the columns contain the estimated eigenvalues of the k covariance matrices under the CPC model.}
 }
 \references{
 %% ~put references to the literature/web site here ~
+Flury, B. N. and Gautschi, W. (1986). An algorithm for simultaneous orthogonal transformation of several positive definite symmetric matrices to nearly diagonal form. SIAM Journal on Scientific and Statistical Computing, 7(1): 169-184.
 }
 \author{
 Danie Uys, Theo Pepler
@@ -48,52 +43,21 @@ Danie Uys, Theo Pepler
 
 \seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{G.algorithm}}, \code{\link{stepwisecpc}}
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+# Versicolor and virginica groups of the Iris data
+data(iris)
+versicolor <- iris[51:100, 1:4]
+virginica <- iris[101:150, 1:4]
 
-## The function is currently defined as
-function (covmats, nvec) 
-{
-    p <- dim(covmats)[2]
-    B <- diag(p)
-    DIFF <- 100
-    k <- dim(covmats)[3]
-    while (DIFF > 1e-09) {
-        B.old <- B
-        T.mat <- array(NA, dim = c(2, 2, k))
-        for (m in 1:(p - 1)) {
-            for (j in (m + 1):p) {
-                vek <- c(m, j)
-                for (i in 1:k) {
-                  T.mat[, , i] <- t(B[, vek]) \%*\% covmats[, , 
-                    i] \%*\% B[, vek]
-                }
-                J <- G.algorithm(T.mat, nvec)
-                B[, vek] <- B[, vek] \%*\% J
-            }
-        }
-        for (i in 1:p) {
-            for (j in 1:p) {
-                DIFF <- abs(B[i, j] - B.old[i, j])
-            }
-        }
-    }
-    diagvals <- 0
-    for (i in 1:k) {
-        diagvals <- diagvals + diag(t(B) \%*\% covmats[, , i] \%*\% 
-            B)
-    }
-    B <- B[, order(diagvals, decreasing = TRUE)]
-    diagvalsmat <- matrix(NA, nrow = p, ncol = k)
-    for (i in 1:k) {
-        diagvalsmat[, i] <- diag(t(B) \%*\% covmats[, , i] \%*\% 
-            B)
-    }
-    return(list(B = B, diagvals = diagvalsmat))
-  }
+# Create array containing the two covariance matrices
+S <- array(NA, c(4, 4, 2))
+S[, , 1] <- cov(versicolor)
+S[, , 2] <- cov(virginica)
+nvec <- c(nrow(versicolor), nrow(virginica))
+
+cpc::FG(covmats = S, nvec = nvec)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

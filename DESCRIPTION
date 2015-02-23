@@ -7,4 +7,4 @@ Author: Theo Pepler
 Maintainer: Theo Pepler <tpepler@sun.ac.za>
 Description: More about what it does (maybe more than one line)
 License: GPL-2
-Depends: gtools
+Depends: gtools, JADE, MASS, rgl

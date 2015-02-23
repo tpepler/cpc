@@ -1,26 +1,24 @@
-\name{flury.AIC}
-\alias{flury.AIC}
+\name{rotationmat.maxcor}
+\alias{rotationmat.maxcor}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{AIC statistics for Flury's hierarchy
+\title{
 %%  ~~function to do ... ~~
+Maximum correlation rotation matrix
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
-Calculates the Akaike Information Criterion (AIC) for the higher model vs. the lower model in Flury's hierarchy of covariance matrices.
+Finds a rotation matrix with maximum correlation between the variables.
 }
 \usage{
-flury.AIC(covmats.high, covmats.low, nvec, df)
+rotationmat.maxcor(p)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{covmats.high }{Array of estimated covariance matrices under the higher model in Flury's hierarchy.}
-  \item{covmats.low }{Array of estimated covariance matrices under the lower model in Flury's hierarchy.}
-  \item{nvec }{Vector of sample sizes of the k groups.}
-  \item{df }{Degrees of freedom of the higher model, versus the model of unrelated covariance matrices.}
+  \item{p }{Number of variables (rows/columns) required for the rotation matrix.}
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
-This is a utility function used by \code{\link{flury.test}}, but can also be called directly if required.
+Finding rotation matrices (approximately) maximising the correlations between the variables can be useful in some simulation study settings, for example when the purpose is to study the effect of high correlations on the performance of some statistical method.
 }
 \value{
 %%  ~Describe the value returned
@@ -28,11 +26,11 @@ This is a utility function used by \code{\link{flury.test}}, but can also be cal
 %%  \item{comp1 }{Description of 'comp1'}
 %%  \item{comp2 }{Description of 'comp2'}
 %% ...
-Returns the AIC value (scalar).
+Returns the p x p square rotation matrix.
 }
 \references{
 %% ~put references to the literature/web site here ~
-Flury, B. (1988). Common Principal Components and Related Multivariate Models. Wiley.
+Pepler, P.T. (2014). The identification and application of common principal components. PhD dissertation in the Department of Statistics and Actuarial Science, Stellenbosch University.
 }
 \author{
 %%  ~~who you are~~
@@ -46,9 +44,9 @@ Theo Pepler
 
 \seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
-\code{\link{flury.test}}
 }
 \examples{
+rotationmat.maxcor(p = 5)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
