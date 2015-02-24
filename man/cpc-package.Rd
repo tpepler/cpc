@@ -3,19 +3,15 @@
 \alias{cpc}
 \docType{package}
 \title{Common principal component (CPC) analysis and applications}
-\description{
-More about what it does (maybe more than one line)
-~~ A concise (1-5 lines) description of the package ~~
-}
+\description{This package contains tools for common principal component (CPC) analysis and applications of the CPC model to various other statistical techniques. Functions are available for covariance matrix estimation, discriminant analysis and biplots, all under the CPC model.}
 \details{
 \tabular{ll}{
 Package: \tab cpc\cr
 Type: \tab Package\cr
 Version: \tab 0.1-5\cr
-Date: \tab 2015-02-17\cr
+Date: \tab 2015-02-24\cr
 License: \tab GPL-2\cr
 }
-~~ An overview of how to use the package, including the most important functions ~~
 }
 \author{
 Theo Pepler, Danie Uys, Sarel Steel
@@ -27,9 +23,6 @@ Pepler, P.T. (2014). The identification and application of common principal comp
 }
 \keyword{ package }
 \seealso{
-~~ Optional links to other man pages, e.g. ~~
-~~ \code{\link[<pkg>:<pkg>-package]{<pkg>}} ~~
 }
 \examples{
-~~ simple examples of the most important functions ~~
 }
