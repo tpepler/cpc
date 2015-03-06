@@ -2,9 +2,9 @@ Package: cpc
 Type: Package
 Title: Common principal component (CPC) analysis and applications
 Version: 0.1-5
-Date: 2015-02-17
+Date: 2015-03-06
 Author: Theo Pepler
 Maintainer: Theo Pepler <tpepler@sun.ac.za>
-Description: More about what it does (maybe more than one line)
+Description: This package contains tools for common principal component (CPC) analysis and applications of the CPC model to various other statistical techniques. Functions are available for covariance matrix estimation, discriminant analysis and biplots, all under the CPC model.
 License: GPL-2
 Depends: gtools, JADE, MASS, rgl
