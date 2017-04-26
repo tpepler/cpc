@@ -7,4 +7,4 @@ Author: Theo Pepler
 Maintainer: Theo Pepler <tpepler@sun.ac.za>
 Description: This package contains tools for common principal component (CPC) analysis and applications of the CPC model to various other statistical techniques. Functions are available for covariance matrix estimation, discriminant analysis and biplots, all under the CPC model.
 License: GPL-2
-Depends: gtools, JADE, MASS, rgl
+Imports: gtools, JADE, MASS, rgl
