@@ -3,7 +3,6 @@ betasim <- function(k, p, q)
   dotprod.cutoff <- cos(((90 - 2 * k) * pi) / (180 * k))  # maximum value for dot product of eigenvectors that are NOT common (0.766 corresponds to 40 degree angle)
   dotprod <- 1
   BETA.matrices <- array(NA, dim = c(p, p, k))
-  library(gtools)
   
   while(dotprod > dotprod.cutoff){
     mat <- matrix(c(runif(n = p * q, min = 1, max = 100)), nrow = p, ncol = q)
@@ -13,9 +12,9 @@ betasim <- function(k, p, q)
     }
     if(q >= (p - 1)){break}
     BETA.test <- BETA.matrices[, (q + 1):p, ]
-    permsmat <- permutations(n = p - q, r = 2, repeats.allowed = TRUE)
+    permsmat <- gtools::permutations(n = p - q, r = 2, repeats.allowed = TRUE)
     numperms <- nrow(permsmat)
-    groupcombsmat <- combinations(n = k, r = 2, repeats.allowed = FALSE)
+    groupcombsmat <- gtools::combinations(n = k, r = 2, repeats.allowed = FALSE)
     numgroupcombs <- nrow(groupcombsmat)
     
     dotvec <- rep(NA, times = numperms * numgroupcombs)

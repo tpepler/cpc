@@ -10,7 +10,7 @@ Discriminant analysis under various assumed covariance matrix structures
 Performs discriminant analysis for two groups, under the assumption of equal, CPC or unrelated population covariance matrices.
 }
 \usage{
-discriminant.qda(origdata, group, method = c("unbiased", "pooled", "cpc", "fullcpccrossvalid"), B = NULL, standardize = F)
+discriminant.qda(origdata, group, method = c("unbiased", "pooled", "cpc", "fullcpccrossvalid"), B = NULL, standardize = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

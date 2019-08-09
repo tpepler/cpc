@@ -9,13 +9,14 @@
 Calculates the AIC and chi square statistics for all the applicable models in Flury's hierarchy of covariance structures for several covariance matrices.
 }
 \usage{
-flury.test(covmats, nvec, B = FG(covmats = covmats, nvec = nvec)$B, qmax = NULL, commonvec.order = findcpc(covmats = covmats, B = B, plotting = F)$commonvec.order)
+flury.test(covmats, nvec, B = cpc::FG(covmats = covmats, nvec = nvec)$B, p = dim(covmats)[1], qmax = p - 2, commonvec.order = findcpc(covmats = covmats, B = B, plotting = FALSE)$commonvec.order)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{covmats }{Array of covariance matrices to be tested, created by a command such as \code{covmats <- array(NA, dim = c(p, p, k))}.}
   \item{nvec }{Vector of sample sizes of the k groups.}
   \item{B }{Modal matrix, i.e. the orthogonal p x p matrix diagonalising the k covariance matrices simultaneously under the assumption of common principal components. Can be estimated using simultaneous diagonalisation algorithms such as the Flury-Gautschi (implemented in \code{\link{FG}} or the stepwise CPC (implemented in \code{\link{stepwisecpc}}) algorithms.}
+  \item{p }{Number of columns/variables in the covariance matrix.}
   \item{qmax }{Maximum number of common eigenvectors for which to estimate the partial CPC model statistics.}
   \item{commonvec.order }{Vector indicating the order of the most likely candidates of common eigenvectors -- from 1 (most likely) to p (least likely).}
 }

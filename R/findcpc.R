@@ -7,8 +7,6 @@ findcpc <- function(covmats, B = NULL, cutoff = 0.95, plotting = TRUE, main = "V
   # plotting: should a plot of the dot products be given?
   # cutoff: cutoff point for indicating significance of the geometric mean of the dot products for all pairwise comparisons of a combination of eigenvectors
   
-  library(gtools)
-  
   if(is.null(B)){k <- dim(covmats)[3]}
   else{k <- dim(covmats)[3] + 1}
   p <- dim(covmats)[1]
@@ -29,7 +27,7 @@ findcpc <- function(covmats, B = NULL, cutoff = 0.95, plotting = TRUE, main = "V
   
   # Calculating the sum of the vector correlations of all pairwise vector comparisons per vector combination
   
-  permsmat <- permutations(p, k, repeats.allowed = TRUE)  # Sets up matrix with all possible combinations of the columns of the k sets of eigenvectors
+  permsmat <- gtools::permutations(p, k, repeats.allowed = TRUE)  # Sets up matrix with all possible combinations of the columns of the k sets of eigenvectors
   numperms <- nrow(permsmat)  # Total number of combinations to test for commonnality of the vectors
   numcomparisons <- ncol(permsmat) - 1	# Total number of pairwise comparisons to be made per vector combination
   dotvec <- rep(0, times = numperms)

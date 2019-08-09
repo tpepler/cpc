@@ -30,24 +30,23 @@ biplot <- function(datalist, B, D3 = FALSE, varex = 1, plotvar = TRUE, main = "C
   
   # 3-dimensional biplot
   if(D3){
-    library(rgl)
-    rgl.open()
-    rgl.bg(color = "white", sphere = TRUE)
-    plot3d(x = plotpoints[, 1], y = plotpoints[, 2], z = plotpoints[, 3], xlab = "PC 1", ylab = "PC 2", zlab = "PC 3", type = "n")
-    decorate3d(main = main, xlab = NULL, ylab = NULL, zlab = NULL)
+    rgl::rgl.open()
+    rgl::rgl.bg(color = "white", sphere = TRUE)
+    rgl::plot3d(x = plotpoints[, 1], y = plotpoints[, 2], z = plotpoints[, 3], xlab = "PC 1", ylab = "PC 2", zlab = "PC 3", type = "n")
+    rgl::decorate3d(main = main, xlab = NULL, ylab = NULL, zlab = NULL)
     begin <- 1
     for(i in 1:k){
       end <- begin + nvec[i] - 1
       #points3d(x=plotpoints[begin:end,1],y=plotpoints[begin:end,2],z=plotpoints[begin:end,3],col=col[i])
-      spheres3d(x = plotpoints[begin:end, 1], y = plotpoints[begin:end, 2], z = plotpoints[begin:end, 3], col = col[i], radius = radius)
+      rgl::spheres3d(x = plotpoints[begin:end, 1], y = plotpoints[begin:end, 2], z = plotpoints[begin:end, 3], col = col[i], radius = radius)
       begin <- end + 1    
     }
     
     if(plotvar){
       for(j in 1:p){
-        lines3d(x = c(0, B[j, 1] * varex), y = c(0, B[j, 2] * varex), z = c(0, B[j, 3] * varex), lwd = lwd)
+        rgl::lines3d(x = c(0, B[j, 1] * varex), y = c(0, B[j, 2] * varex), z = c(0, B[j, 3] * varex), lwd = lwd)
       }
-      text3d(x = B[, 1] * varex, y = B[, 2] * varex, z = B[, 3] * varex, texts = varnames)
+      rgl::text3d(x = B[, 1] * varex, y = B[, 2] * varex, z = B[, 3] * varex, texts = varnames)
     }
     #cat(paste("Total amount of variation explained in the 3D biplot:",round(biplotvar.total(X=datamat,B=B,r=3)$explained*100,2),"%\n",sep=""))	# Depends on biplotvar.total function!
     #cat(paste("Amount of variation explained within the groups in the 3D biplot:",round(biplotvar.within(X=datamat,nvek=nvek,B=B,r=3)$explained*100,2),"%\n",sep=""))	# Depends on biplotvar.within function!
@@ -58,9 +57,8 @@ biplot <- function(datalist, B, D3 = FALSE, varex = 1, plotvar = TRUE, main = "C
   
   # 2-dimensional biplot
   else{
-    library(MASS)
     par(pch = 20)
-    eqscplot(x = plotpoints[, 1], y = plotpoints[, 2], type = "n", xlab = "PC 1", ylab = "PC 2", main = main)
+    MASS::eqscplot(x = plotpoints[, 1], y = plotpoints[, 2], type = "n", xlab = "PC 1", ylab = "PC 2", main = main)
     
     begin <- 1
     for(i in 1:k){

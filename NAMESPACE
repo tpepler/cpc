@@ -1,1 +1,7 @@
 exportPattern("^[[:alpha:]]+")
+importFrom("graphics", "abline", "arrows", "par", "plot", "points", "text")
+importFrom("stats", "cov", "median", "quantile", "rchisq", "runif", "sd", "var")
+importFrom("JADE", "rjd")
+importFrom("gtools", "permutations", "combinations")
+importFrom("MASS", "eqscplot")
+importFrom("rgl", "rgl.open", "rgl.bg", "plot3d", "decorate3d", "spheres3d", "lines3d", "text3d")

@@ -48,8 +48,7 @@ biplot.choice <- function(datalist, rdim, add.projectmats = NULL)
   
   # CPC: JADE algorithm
   
-  library(JADE)
-  B.jade <- rjd(X = S)$V
+  B.jade <- JADE::rjd(X = S)$V
   lvals <- rep(0, times = p)
   for(i in 1:k){
     lvals <- lvals + diag(t(B.jade) %*% S[, , i] %*% B.jade)
