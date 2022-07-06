@@ -31,10 +31,12 @@ Implementation of the G algorithm as internal function of the FG algorithm.
 \references{
 %% ~put references to the literature/web site here ~
 Pepler, P.T. (2014). The identification and application of common principal components. PhD dissertation in the Department of Statistics and Actuarial Science, Stellenbosch University.
+
+Beaghen, M. (1997). Canonical Variate Analysis and Related Methods with Longitudinal Data. PhD dissertation, Virginia Polytechnic Institute and State University.
 }
 \author{
 %%  ~~who you are~~
-Danie Uys, Theo Pepler
+Danie Uys, Theo Pepler, Adrian Schroeder
 }
 \note{
 %%  ~~further notes~~

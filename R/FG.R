@@ -1,10 +1,15 @@
-FG <- function(covmats, nvec)
+FG <- function(covmats, nvec, method = c('ML', 'LS'))
 {
-  # Implementation of the FG algorithm as described in Flury 1988 (p 178)
+  # Implementation of the FG algorithm as described in Flury 1988 (p 178),
+  # with Maximum Likelihood estimation. Least Squares estimation method as
+  # described in Beaghen (1997) Canonical variate analysis and related
+  # methods with longitudinal data (PhD dissertation, Appendix 2).
   
   # covmats: array of covariance matrices to be simultaneously diagonalized,
-  #    created by a command such as covmats<-array(NA,dim=c(p,p,k))
+  # created by a command such as covmats <- array(NA, dim = c(p, p, k))
   # nvec: vector of sample sizes for the covariance matrices in covmats
+  # method: estimation method, either Maximum Likelihood ('ML', the default)
+  # or Least Squares ('LS')
   
   p <- dim(covmats)[2]
   B <- diag(p)
@@ -19,7 +24,7 @@ FG <- function(covmats, nvec)
         for(i in 1:k){
           T.mat[, , i] <- t(B[, vek]) %*% covmats[, , i] %*% B[, vek]
         }
-        J <- G.algorithm(T.mat, nvec)
+        J <- G.algorithm(T.mat, nvec, method = method[1])
         B[, vek] <- B[, vek] %*% J
       }
     }
